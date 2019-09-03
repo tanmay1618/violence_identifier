@@ -1,0 +1,4 @@
+*.xml
+*.csv
+*.pyc
+.ipynb_checkpoints/
