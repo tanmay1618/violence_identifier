@@ -9,9 +9,11 @@ import numpy as np
 import sys
 from sklearn.metrics import confusion_matrix
 
+label_dict = {1795:"Non Violent",1796:"Violent"}
+
 def train():
     data = pd.read_csv("file.csv")
-
+    
     labels = data["label"].unique()
     count_class_0, count_class_1 = data["label"].value_counts()
     df_class_0 = data[data['label'] == labels[0]]
@@ -57,8 +59,9 @@ def predict(sentence):
     clf = model_data["clf_model"]
     X_test_counts = count_vect.transform([sentence])
     X_test_tfidf = tfidf_transformer.transform(X_test_counts)
-    predicted = clf.predict(X_test_tfidf)
-    return(predicted)
+    predicted = clf.predict(X_test_tfidf)[0]
+    predicted_value = label_dict[predicted]
+    return(predicted_value)
 
 
 if __name__ == "__main__":
