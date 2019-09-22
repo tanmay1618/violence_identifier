@@ -12,9 +12,22 @@ from sklearn.metrics import confusion_matrix
 def train():
     data = pd.read_csv("file.csv")
 
-    X = data["text"]
-    y = data["label"]
-    print(y.value_counts())
+    labels = data["label"].unique()
+    count_class_0, count_class_1 = data["label"].value_counts()
+    df_class_0 = data[data['label'] == labels[0]]
+    df_class_1 = data[data['label'] == labels[1]]
+
+    df_class_1_over = df_class_1.sample(count_class_0, replace=True)
+    df_test_over = pd.concat([df_class_0, df_class_1_over], axis=0)
+
+    print('Random over-sampling:')
+    print(df_test_over.label.value_counts())
+    
+    X = df_test_over["text"]
+    y = df_test_over["label"]
+
+
+    #print(y.value_counts())
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
     count_vect = CountVectorizer()

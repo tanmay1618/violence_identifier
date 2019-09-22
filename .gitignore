@@ -6,4 +6,5 @@ __pycache__/
 *.json
 *.db
 *.txt
+*.model
 violence.code-workspace
